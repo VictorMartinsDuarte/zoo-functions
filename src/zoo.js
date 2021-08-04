@@ -24,7 +24,15 @@ function createEmployee(personalInfo, associatedWith) {
 }
 
 function isManager(id) {
-  // seu código aqui
+  const managersId = employees.map(({ managers }) => managers).reduce((acc, current) => {
+    acc.push(...current);
+    return acc;
+  });
+  const managersFiltered = managersId.filter((element, i) => managersId.indexOf(element) === i);
+  // Referência filter + indexOf = https://www.horadecodar.com.br/2020/08/15/remover-elementos-repetidos-de-um-vetor-em-javascript-repetidos-array/
+  // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+
+  return managersFiltered.some((element) => element === id);
 }
 
 function addEmployee(id, firstName, lastName, managers, responsibleFor) {
