@@ -1,12 +1,13 @@
 const data = require('./data');
-const { species, employees, hours, prices } = require('./data')
+const { species } = require('./data');
 
 function getSpeciesByIds(...ids) {
   return species.filter((element, index) => element.id === ids[index]);
 }
 
 function getAnimalsOlderThan(animal, age) {
-  // seu código aqui
+  const animalObject = species.find((obj) => obj.name === animal);
+  return animalObject.residents.every((element) => element.age >= age);
 }
 
 function getEmployeeByName(employeeName) {
@@ -25,7 +26,7 @@ function addEmployee(id, firstName, lastName, managers, responsibleFor) {
   // seu código aqui
 }
 
-function countAnimals(species) {
+function countAnimals(speciesName) {
   // seu código aqui
 }
 
