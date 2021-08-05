@@ -1,5 +1,5 @@
 const data = require('./data');
-const { species, employees, prices } = require('./data');
+const { species, employees, prices, hours } = require('./data');
 
 // *-- 1 --*
 function getSpeciesByIds(...ids) {
@@ -34,20 +34,20 @@ function isManager(id) {
   // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
 
   return managersFiltered.some((element) => element === id);
+  // return employees.some((element) => [...element.managers].includes(id));
+  // Alternativa de código pelo Kelner R.
 }
 // *-- 6 --*
 function addEmployee(id, firstName, lastName, managers = [], responsibleFor = []) {
   if (!id || !firstName || !lastName) return 'Preencha os parâmetros';
 
-  const newEmployee = {
+  return employees.push({
     id,
     firstName,
     lastName,
     managers,
     responsibleFor,
-  };
-
-  return employees.push(newEmployee);
+  });
 }
 // *-- 7 --*
 function countAnimals(speciesName) {
@@ -61,7 +61,7 @@ function countAnimals(speciesName) {
 }
 // *-- 8 --*
 function calculateEntry(entrants) {
-  if (!entrants || Object.keys(entrants).length < 1) return 0;
+  if (!entrants) return 0;
   const { Adult = 0, Senior = 0, Child = 0 } = entrants;
   const sumPrices = (Adult * prices.Adult) + (Senior * prices.Senior)
     + (Child * prices.Child);
@@ -74,8 +74,25 @@ function getAnimalMap(options) {
 }
 // *-- 10 --*
 function getSchedule(dayName) {
-  // seu código aqui
+  // const { Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday } = hours;
+  if (!dayName) {
+    const days = Object.keys(hours);
+
+    return days.reduce((acc, current) => {
+      acc[current] = `Open from ${hours[current].open}am until ${hours[current].close - 12}pm`;
+      if (current === 'Monday') {
+        acc[current] = 'CLOSED';
+      }
+      return acc;
+    }, {});
+  }
+  if (dayName === 'Monday') return { [dayName]: 'CLOSED' };
+
+  return { [dayName]: `Open from ${hours[dayName].open}am until ${hours[dayName].close - 12}pm` };
 }
+
+console.log(getSchedule());
+
 // *-- 11 --*
 function getOldestFromFirstSpecies(id) {
   // seu código aqui
