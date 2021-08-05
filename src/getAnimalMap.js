@@ -1,4 +1,4 @@
-const { species } = require('./data');
+// const { species } = require('./data');
 const data = require('./data');
 
 const region = (location) => data.species.filter((value) => value.location === location);
