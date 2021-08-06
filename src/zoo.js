@@ -1,5 +1,6 @@
 const data = require('./data');
 const { species, employees, prices, hours } = require('./data');
+const { employeesInfo } = require('./getEmployeeCoverage');
 
 // *-- 1 --*
 function getSpeciesByIds(...ids) {
@@ -74,7 +75,6 @@ function getAnimalMap(options) {
 }
 // *-- 10 --*
 function getSchedule(dayName) {
-  // const { Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday } = hours;
   if (!dayName) {
     const days = Object.keys(hours);
 
@@ -90,9 +90,6 @@ function getSchedule(dayName) {
 
   return { [dayName]: `Open from ${hours[dayName].open}am until ${hours[dayName].close - 12}pm` };
 }
-
-console.log(getSchedule());
-
 // *-- 11 --*
 function getOldestFromFirstSpecies(id) {
   const managedAnimals = employees.find((employee) => employee.id === id).responsibleFor;
@@ -103,16 +100,20 @@ function getOldestFromFirstSpecies(id) {
 }
 // *-- 12 --*
 function increasePrices(percentage) {
-  const percent = percentage / 100;
+  const percent = (percentage / 100) + 1;
   const { Adult, Senior, Child } = prices;
-  prices.Adult = Math.round((Adult + (Adult * percent)) * 100) / 100;
-  prices.Senior = Math.round((Senior + (Senior * percent)) * 100) / 100;
-  prices.Child = Math.round((Child + (Child * percent)) * 100) / 100;
+  prices.Adult = Math.round((Adult * percent) * 100) / 100;
+  prices.Senior = Math.round((Senior * percent) * 100) / 100;
+  prices.Child = Math.round((Child * percent) * 100) / 100;
 }
 // *-- 13 --*
 function getEmployeeCoverage(idOrName) {
-  // seu código aqui
-}
+  if (!idOrName) return employeesInfo(employees);
+
+  const empName = employees.filter(({ id = 0, firstName = 0, lastName = 0 }) =>
+    id === idOrName || firstName === idOrName || lastName === idOrName);
+  return employeesInfo(empName);
+} // Final da resolução feita com ajuda do Luiz G.
 
 module.exports = {
   calculateEntry,
