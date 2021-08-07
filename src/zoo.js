@@ -1,6 +1,7 @@
 const data = require('./data');
 const { species, employees, prices, hours } = require('./data');
 const { employeesInfo } = require('./getEmployeeCoverage');
+const { noParam, includeTrue, sortedTrue, includeAndSorted, filterBySex, includeAndSex } = require('./getAnimalMap.js');
 
 // *-- 1 --*
 function getSpeciesByIds(...ids) {
@@ -71,8 +72,17 @@ function calculateEntry(entrants) {
 }
 // *-- 9 --*
 function getAnimalMap(options) {
-  // seu código aqui
+  if (!options) return noParam();
+  if (options) return includeAndSorted(options);
+  if (options) return includeAndSex(options);
 }
+//   switch (options) {
+//   case includeNames:
+//     includeTrue();
+//     break;
+//   default:
+//     break;
+// }
 // *-- 10 --*
 function getSchedule(dayName) {
   if (!dayName) {
